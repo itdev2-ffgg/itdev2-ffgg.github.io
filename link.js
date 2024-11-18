@@ -12,7 +12,7 @@
     footer.setAttribute("slot", "footer");
     
     // content
-    content.innerHTML = "Redirigiendo al asistente.";
+    content.innerHTML = "Redirigiendo al asistente virtual...";
     content.style.padding = "1rem";
     
     // footer btn
@@ -28,23 +28,22 @@
     // open dialog
     dialog.show();
     
-    // Wait 5 seconds and make a server call
-    setTimeout(() => {
-        http://www.agrodesarrollo.com/test/?userId=${userId}
-        fetch('https://jsonplaceholder.typicode.com/todoss/1') // Example URL
-            .then(response => {
-                if (!response.ok) {
-                    content.innerHTML += `<br><br>Error en la respuesta.`;
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Dato recibido:", data);
-                content.innerHTML += `<br><br>Received JSON: <pre>${JSON.stringify(data, null, 2)}</pre>`;
-            })
-            .catch(error => {
-                console.error("There was a problem with the fetch operation:", error);
-                content.innerHTML += `<br><br>Error fetching JSON: ${error.message}`;
-            });
-    }, 5000);
+    fetch(`https://localhost:7096/api/Employee/Encode?id=${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                content.innerHTML += `<br><br>Error en la respuesta.`;
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Dato recibido:", data);
+            // Wait 2 seconds and make a server call
+            setTimeout(() => {
+                window.location.href = `http://www.webdataka.com/?userId=${data}`;
+            }, 2000);
+        })
+        .catch(error => {
+            content.innerHTML += `<br><br>Error con el dato obtenido: ${error.message}`;
+    });
+
 })();
